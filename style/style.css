@@ -233,6 +233,168 @@ body {
   cursor: pointer;
 }
 
+/* ---------- Extra heart effects (rain / pop / trail / big float) ---------- */
+#hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10500;
+}
+
+/* Individual heart element used for multiple effects */
+.extra-heart,
+.big-heart,
+.heart-trail {
+  position: absolute;
+  width: 22px;
+  height: 20px;
+  transform: rotate(-45deg) scale(1);
+  background: linear-gradient(135deg, #ff6b9a 0%, #ff9bb3 60%);
+  border-radius: 3px 3px 0 0;
+  will-change: transform, opacity;
+  display: inline-block;
+  pointer-events: none;
+  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.12);
+}
+
+/* pseudo parts to form the heart shape */
+.extra-heart:before,
+.extra-heart:after,
+.big-heart:before,
+.big-heart:after,
+.heart-trail:before,
+.heart-trail:after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 20px;
+  background: inherit;
+  border-radius: 50%;
+}
+.extra-heart:before {
+  top: -11px;
+  left: 0;
+}
+.extra-heart:after {
+  left: 11px;
+  top: 0;
+}
+.big-heart:before {
+  top: -22px;
+  left: 0;
+  width: 44px;
+  height: 40px;
+  border-radius: 50%;
+}
+.big-heart:after {
+  left: 44px;
+  top: 0;
+  width: 44px;
+  height: 40px;
+  border-radius: 50%;
+}
+.heart-trail:before {
+  top: -10px;
+  left: 0;
+}
+.heart-trail:after {
+  left: 10px;
+  top: 0;
+}
+
+/* Heart float upwards (rain) */
+@keyframes heartFloat {
+  0% {
+    transform: translateY(0) rotate(-20deg) scale(1);
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(-40vh) rotate(10deg) scale(1.08);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-110vh) rotate(45deg) scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* Heart pop scale */
+@keyframes heartPop {
+  0% {
+    transform: scale(0.1) rotate(-45deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.14) rotate(-45deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.98) rotate(-45deg);
+    opacity: 1;
+  }
+}
+
+/* Big floating hearts */
+.big-heart {
+  width: 120px;
+  height: 110px;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  opacity: 0;
+}
+@keyframes bigFloat {
+  0% {
+    transform: translate(-50%, 20%) scale(0.6) rotate(-45deg);
+    opacity: 0;
+    filter: blur(2px);
+  }
+  30% {
+    opacity: 0.9;
+    filter: blur(0px);
+  }
+  60% {
+    transform: translate(-50%, -40%) scale(1) rotate(-20deg);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-50%, -140%) scale(0.9) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+/* small trailing hearts */
+.heart-trail {
+  width: 12px;
+  height: 11px;
+  opacity: 0.95;
+  transform: rotate(-45deg) scale(0.9);
+  mix-blend-mode: screen;
+}
+
+/* variations via classes */
+.heart-lg {
+  width: 40px;
+  height: 36px;
+}
+.heart-med {
+  width: 28px;
+  height: 25px;
+}
+.heart-fast {
+  animation-duration: 3s;
+}
+.heart-slow {
+  animation-duration: 7s;
+}
+
+/* utility: hidden-on-mobile for heavy effects */
+@media screen and (max-width: 600px) {
+  .big-heart {
+    display: none;
+  }
+}
+
 /* Media Queries */
 @media screen and (max-height: 1000px) {
   .six .hat {
@@ -258,43 +420,8 @@ body {
   }
 }
 
-@media screen and (max-width: 500px) {
-  .container {
-    width: 90%;
-  }
-
+@media screen and (max-width: 700px) {
   .four .text-box {
     width: 90%;
-  }
-
-  .text-box .fake-btn {
-    right: 5px;
-    bottom: -38px;
-  }
-
-  .idea-5 span {
-    display: block;
-  }
-
-  .idea-6 span {
-    font-size: 10rem;
-  }
-
-  .six .hat {
-    width: 50px;
-    top: -20px;
-  }
-
-  .wish-hbd {
-    font-size: 2.3em;
-  }
-
-  .wish h5 {
-    font-size: 1.4rem;
-  }
-
-  .nine p {
-    font-size: 1.5rem;
-    font-weight: lighter;
   }
 }
